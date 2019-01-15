@@ -7,6 +7,8 @@ class Queen(ChessPiece):
         ChessPiece.__init__(self, team, loc)
 
     def is_valid_move(self, new_loc):
+        if not ChessPiece.is_valid_move(self, new_loc):
+            return False
         return (self.curr_loc[0] - new_loc[0] == self.curr_loc[1] - new_loc[1]) or (self.curr_loc[0] == new_loc[0] or self.curr_loc[1] == new_loc[1])
 
     def __str__(self):
