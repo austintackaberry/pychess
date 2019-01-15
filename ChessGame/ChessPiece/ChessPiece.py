@@ -17,7 +17,7 @@ class ChessPiece:
                 if j != new_loc[1]:
                     j += (new_loc[1] - j) // \
                         abs(new_loc[1] - j)
-                if board[i][j] != 'x':
+                if board[i][j] != 'x' and (i != new_loc[0] or j != new_loc[1]):
                     return False
 
         return True

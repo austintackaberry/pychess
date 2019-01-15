@@ -57,11 +57,13 @@ class ChessGame:
     def turn(self):
         ans = input('It is team ' + self.team_turn + "'s turn: ")
         curr_loc, new_loc = map(convert, ans.split(' '))
+        print(curr_loc, new_loc)
         if curr_loc[0] < 0 or curr_loc[0] > 7 or curr_loc[1] < 0 or curr_loc[1] > 7 or new_loc[0] < 0 or new_loc[0] > 7 or new_loc[1] < 0 or new_loc[1] > 7:
             print('At least one of the two locations is outside of the board')
             return
         piece = self.board[curr_loc[0]][curr_loc[1]]
         if piece != 'x' and piece.is_valid_move(new_loc, self.board):
+            print('is valid move')
             piece.move(new_loc)
             dest_piece = self.board[new_loc[0]][new_loc[1]]
             if isinstance(dest_piece, King):
