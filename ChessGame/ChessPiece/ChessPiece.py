@@ -5,7 +5,7 @@ class ChessPiece:
 
     def is_valid_move(self, new_loc, board, cm):
         dest = board[new_loc[0]][new_loc[1]]
-        if new_loc[0] < 0 or new_loc[0] > 7 or new_loc[1] < 0 or new_loc[1] > 7 or (dest != 'x' and self.team == dest.team):
+        if (new_loc == self.curr_loc) or new_loc[0] < 0 or new_loc[0] > 7 or new_loc[1] < 0 or new_loc[1] > 7 or (dest != 'x' and self.team == dest.team):
             return False
         if cm:
             i = self.curr_loc[0]
