@@ -6,10 +6,10 @@ class Queen(ChessPiece):
     def __init__(self, team, loc):
         ChessPiece.__init__(self, team, loc)
 
-    def is_valid_move(self, new_loc):
-        if not ChessPiece.is_valid_move(self, new_loc):
+    def is_valid_move(self, new_loc, board):
+        if not ChessPiece.is_valid_move(self, new_loc, board, True):
             return False
         return (self.curr_loc[0] - new_loc[0] == self.curr_loc[1] - new_loc[1]) or (self.curr_loc[0] == new_loc[0] or self.curr_loc[1] == new_loc[1])
 
     def __str__(self):
-        return colored('K', self.team)
+        return colored('Q', self.team)

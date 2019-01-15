@@ -10,12 +10,13 @@ from .ChessPiece.Pieces.Pawn import Pawn
 class ChessGame:
     def __init__(self):
         self.team_turn = 'blue'
+        self.game_over = False
         self.board = [8*['x'] for i in range(8)]
         self.board[0][0] = Rook('blue', [0, 0])
         self.board[0][1] = Knight('blue', [0, 1])
         self.board[0][2] = Bishop('blue', [0, 2])
-        self.board[0][3] = Queen('blue', [0, 3])
-        self.board[0][4] = King('blue', [0, 4])
+        self.board[0][3] = King('blue', [0, 3])
+        self.board[0][4] = Queen('blue', [0, 4])
         self.board[0][5] = Bishop('blue', [0, 5])
         self.board[0][6] = Knight('blue', [0, 6])
         self.board[0][7] = Rook('blue', [0, 7])
@@ -47,6 +48,27 @@ class ChessGame:
 
     def start(self):
         self.print_board()
+        print('Welcome! If it is your turn, type the location of the piece you want to move and where you want to move it.')
+        print('For example: "A1 B3"\n')
+        while not self.game_over:
+            self.turn()
+            self.print_board()
+
+    def turn(self):
+        ans = input('It is team ' + self.team_turn + "'s turn: ")
+        curr_loc, new_loc = map(convert, ans.split(' '))
+        if curr_loc[0] < 0 or curr_loc[0] > 7 or curr_loc[1] < 0 or curr_loc[1] > 7 or new_loc[0] < 0 or new_loc[0] > 7 or new_loc[1] < 0 or new_loc[1] > 7:
+            print('At least one of the two locations is outside of the board')
+            return
+        piece = self.board[curr_loc[0]][curr_loc[1]]
+        if piece != 'x' and piece.is_valid_move(new_loc, self.board):
+            piece.move(new_loc)
+            dest_piece = self.board[new_loc[0]][new_loc[1]]
+            if isinstance(dest_piece, King):
+                self.game_over = True
+            self.board[new_loc[0]][new_loc[1]] = piece
+            self.board[curr_loc[0]][curr_loc[1]] = 'x'
+            self.team_turn = 'green' if self.team_turn == 'blue' else 'blue'
 
     def print_board(self):
         p_str = "    A  B  C  D  E  F  G  H\n  ________________________\n"
@@ -56,3 +78,7 @@ class ChessGame:
                 p_str += ' ' + str(self.board[i][j]) + " "
             p_str += '\n'
         print(p_str)
+
+
+def convert(loc):
+    return [8 - int(loc[1]), ord(loc[0]) - 65]
