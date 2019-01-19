@@ -12,5 +12,4 @@ class Bishop(ChessPiece):
         return abs(self.curr_loc[0] - new_loc[0]) == abs(self.curr_loc[1] - new_loc[1])
 
     def __str__(self):
-
         return colored('B', self.team)
